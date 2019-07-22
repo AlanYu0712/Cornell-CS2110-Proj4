@@ -45,12 +45,12 @@ class HeapTest {
 		
 		assertEquals("d", h.peek());
 		
-//		assertEquals("a", h.poll());
-//		
-//		assertEquals(2, h.size());
-//		
-//		
-//		assertEquals("b", h.peek());
+		assertEquals("d", h.poll());
+		
+		assertEquals(3, h.size());
+		
+		
+		assertEquals("c", h.peek());
 //		
 //		
 //		h.changePriority("c", 5);

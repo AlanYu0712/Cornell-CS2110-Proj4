@@ -39,8 +39,8 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		listE.remove(size-1);
 		listP.remove(size-1);
 		size--;
-		this.fixheap(listP, 0);
-		///fix the array list so it is a heap agian
+		this.moveDown(listP, 0);
+		///fix the array list so it is a heap again
 		return temp;
 	}
 
@@ -74,14 +74,14 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	private P left(P r) {
 		int indexr= listP.indexOf(r);
 		int leftIndex = (indexr*2)+1;
-		if(listP.get(leftIndex) !=null)
+		if(leftIndex <= (listP.size()-1))
 			return listP.get((indexr*2)+1);
 		return null;
 	}
 	private P right(P r) {
 	int indexr= listP.indexOf(r);
 	int rightIndex = (indexr*2)+2;
-	if(listP.get(rightIndex) != null)
+	if(rightIndex <= (listP.size()-1))
 		return listP.get((indexr*2)+2);
 	return null;
 	}
@@ -134,6 +134,37 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 				swapE(listE, z, a);
 				System.out.println("Final"+listP.indexOf(value));
 				moveUp(h, a);
+				
+			}
+		}
+	}
+	
+	private void moveDown(ArrayList<P> h, int i) {
+		P value = listP.get(i);
+		if(listP.indexOf(left(value))<= (listP.size()-1)&&left(value)!=null) {
+			if(this.comparator().compare(value, left(value))<0) {
+				int a = listP.indexOf(left(value));
+				int z = listP.indexOf(value);
+				P conservV = listP.get(z);
+				P conservP = listP.get(a);
+				
+				swapP(h, listP.indexOf(value), listP.indexOf(left(value)));
+				swapE(listE, z, a);
+				System.out.println("Final"+listP.indexOf(value));
+				moveDown(h, a);
+				
+			}
+		} else if(listP.indexOf(right(value))<= (listP.size()-1)&& right(value)!=null) {
+			if(this.comparator().compare(value, right(value))<0) {
+				int a = listP.indexOf(right(value));
+				int z = listP.indexOf(value);
+				P conservV = listP.get(z);
+				P conservP = listP.get(a);
+				
+				swapP(h, listP.indexOf(value), listP.indexOf(right(value)));
+				swapE(listE, z, a);
+				System.out.println("Final"+listP.indexOf(value));
+				moveDown(h, a);
 				
 			}
 		}
