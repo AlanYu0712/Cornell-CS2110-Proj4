@@ -12,25 +12,43 @@ class HeapTest {
 	@Test
 	void test() {
 		
-		Comparator<Integer> c = null;
-		
-		ArrayList<String> s = new ArrayList<String>();
-		s.add("a");
-		s.add("b");
-		s.add("c");
-		
-		ArrayList<Integer> i = new ArrayList<Integer>();
-		i.add(1);
-		i.add(2);
-		i.add(3);
+		Comparator<Integer> c = new Comparator<Integer>() {
+
+			@Override
+			public int compare(Integer o1, Integer o2) {
+				// TODO Auto-generated method stub
+				if(o1>o2)
+					return 1;
+				else if(o1<o2)
+					return -1;
+				else {
+					return 0;
+				}
+			}
+		};
 		
 		Heap<String, Integer> h = new Heap<String, Integer>(c);
 		
-		h.add("a", 1);
-//		h.add("b", 2);
-//		h.add("c", 3);
-		
+		h.add("a", 2);
 		System.out.println(h.size());
+		h.add("b", 1);
+		System.out.println(h.size());
+		h.add("c", 3);
+		System.out.println(h.size());
+		
+//		assertEquals(3, h.size());
+//		
+//		assertEquals("a", h.poll());
+//		
+//		assertEquals(2, h.size());
+//		
+//		
+//		assertEquals("b", h.peek());
+//		
+//		
+//		h.changePriority("c", 5);
+//		assertEquals("c", h.peek());
+		
 		
 		
 		

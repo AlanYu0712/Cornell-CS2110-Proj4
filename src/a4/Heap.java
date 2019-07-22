@@ -16,7 +16,8 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 			 
 	}
 	@Override
-	public Comparator<? super P> comparator() {
+	public Comparator<? super P> comparator() 
+	{
 		// TODO Auto-generated method stub
 		return conparator;
 	}
@@ -72,22 +73,27 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 
 	private P left(P r) {
 		int indexr= listP.indexOf(r);
-		
-		return listP.get(indexr*2+1);
+		int leftIndex = (indexr*2)+1;
+		if(listP.get(leftIndex) !=null)
+			return listP.get((indexr*2)+1);
+		return null;
 	}
 	private P right(P r) {
 	int indexr= listP.indexOf(r);
-		return listP.get(indexr*2+2);
+	int rightIndex = (indexr*2)+2;
+	if(listP.get(rightIndex) != null)
+		return listP.get((indexr*2)+2);
+	return null;
 	}
 	private P parent(P r) {
 	int indexr= listP.indexOf(r);
-	if (indexr ==0) {
-	if(indexr%2==0) {
-		return listP.get(indexr/2-2);
-	}
-	else {
-		return listP.get(indexr/2-1);
-	}
+	if (indexr != 0) {
+		if(indexr%2==0) {
+			return listP.get((indexr/2)-1);
+		}
+		else {
+			return listP.get((indexr/2)-(1/2));
+		}
 	}
 	return null;
 	}
@@ -105,6 +111,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	}
 	private void fixheap(ArrayList<P> h, int i) {
 		P r= h.get(i);
+		
 		while(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0||this.comparator().compare(r, this.parent(r))>0) {
 			if(this.comparator().compare(r, this.parent(r))>0) {
 				swapP(h,h.indexOf(r),h.indexOf(this.parent(r)));
@@ -120,7 +127,22 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 					swapE(listE,h.indexOf(r),h.indexOf(this.left(r)));
 				}
 			}
-		}
+		
+//		while(this.comparator().compare(r, parent(r)) == 1) {
+//			swapP(h,h.indexOf(r),h.indexOf(this.parent(r)));
+//			swapE(listE,h.indexOf(r),h.indexOf(this.parent(r)));
+//		}
+//		
+//		while(this.comparator().compare(r, left(r))<0|| this.comparator().compare(r,right(r))<-1) {
+//			if(this.conparator.compare(r, left(r))<0) {
+//				swapP(h,h.indexOf(r),h.indexOf(this.right(r)));
+//				swapE(listE,h.indexOf(r),h.indexOf(this.right(r)));
+//			}else if(this.comparator().compare(r, right(r))<0) {
+//				swapP(h,h.indexOf(r),h.indexOf(this.left(r)));
+//				swapE(listE,h.indexOf(r),h.indexOf(this.left(r)));
+//			}
+//			
+//		}
 	}
 
 }
