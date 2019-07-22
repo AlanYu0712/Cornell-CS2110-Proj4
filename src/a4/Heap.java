@@ -165,7 +165,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		P value = listP.get(i);
 		if(this.comparator().compare(value, parent(value))>0) {
 			int j = listP.indexOf(parent(value));
-			h.set(, parent(value));
+			h.set(value, parent(value));
 			moveUp(h, i);
 		}
 	}
