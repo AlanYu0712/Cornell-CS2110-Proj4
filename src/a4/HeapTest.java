@@ -27,17 +27,24 @@ class HeapTest {
 			}
 		};
 		
+		
 		Heap<String, Integer> h = new Heap<String, Integer>(c);
 		
-		h.add("a", 2);
 		System.out.println(h.size());
-		h.add("b", 1);
+		h.add("a", 3);
 		System.out.println(h.size());
-		h.add("c", 3);
+		h.add("b", 2);
+		
+		System.out.println("current size"+h.size());
+		h.add("c", 4);
 		System.out.println(h.size());
 		
-//		assertEquals(3, h.size());
-//		
+		h.add("d", 5);
+		
+		assertEquals(4, h.size());
+		
+//		assertEquals("d", h.peek());
+		
 //		assertEquals("a", h.poll());
 //		
 //		assertEquals(2, h.size());

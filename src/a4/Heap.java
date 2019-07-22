@@ -53,13 +53,13 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	@Override
 	public void add(E e, P p) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		int sizeP = listP.size();
-		int sizeE = listE.size();
-		
+//		int sizeP = listP.size();
+//		int sizeE = listE.size();
 		listE.add(e);
 		listP.add(p);
-		if(sizeP != 0 && sizeE != 0)
+		if(listP.size()!=1 && listE.size()!=1)
 			this.fixheap(listP, listP.indexOf(p));
+		
 		size++;
 		
 	}
@@ -85,17 +85,26 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		return listP.get((indexr*2)+2);
 	return null;
 	}
+	
 	private P parent(P r) {
-	int indexr= listP.indexOf(r);
-	if (indexr != 0) {
-		if(indexr%2==0) {
-			return listP.get((indexr/2)-1);
+		int indexr= listP.indexOf(r);
+		System.out.println("the index is" + indexr);
+		int headL = ((indexr-1)/2);
+		System.out.println("headL"+headL);
+		System.out.println(listP.get(0));
+		int headR = ((indexr/2)-1);
+		
+		if (indexr%2 == 0) {
+			if(listP.get(headR)!= null) 
+				return listP.get(headR);
+			
+		}else if(indexr%2 == 1) {
+			if(listP.get(headL)!= null) {
+				return listP.get(headL);
+			}
 		}
-		else {
-			return listP.get((indexr/2)-(1/2));
-		}
-	}
-	return null;
+		
+		return null;
 	}
 	private void swapE(ArrayList<E> h, int i,int j) {
 		
@@ -109,40 +118,56 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		h.set(i, h.get(j));
 		h.set(j, temp);
 	}
-	private void fixheap(ArrayList<P> h, int i) {
-		P r= h.get(i);
-		
-		while(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0||this.comparator().compare(r, this.parent(r))>0) {
-			if(this.comparator().compare(r, this.parent(r))>0) {
-				swapP(h,h.indexOf(r),h.indexOf(this.parent(r)));
-				swapE(listE,h.indexOf(r),h.indexOf(this.parent(r)));
-			}
-			else if(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0) {
-				if(this.comparator().compare(this.right(r),this.left(r))>0) {
-					swapP(h,h.indexOf(r),h.indexOf(this.right(r)));
-					swapE(listE,h.indexOf(r),h.indexOf(this.right(r)));
-				}
-				else if(this.comparator().compare(this.right(r),this.left(r))<0) {
-					swapP(h,h.indexOf(r),h.indexOf(this.left(r)));
-					swapE(listE,h.indexOf(r),h.indexOf(this.left(r)));
-				}
-			}
-		
-//		while(this.comparator().compare(r, parent(r)) == 1) {
-//			swapP(h,h.indexOf(r),h.indexOf(this.parent(r)));
-//			swapE(listE,h.indexOf(r),h.indexOf(this.parent(r)));
+	
+	
+//	private void fixheap(ArrayList<P> h, int i) {
+//		System.out.println("the input is"+i);
+//		P r= h.get(i);
+//		P storageR = r;
+//		
+//		System.out.println(r);
+//		System.out.println("parent: "+parent(r));
+//		
+//		
+//		while(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0||this.comparator().compare(r, this.parent(r))>0) {
+//			if(this.comparator().compare(r, this.parent(r))>0) {
+//				swapP(h,h.indexOf(r),h.indexOf(this.parent(r)));
+//				swapE(listE,h.indexOf(r),h.indexOf(this.parent(r)));
+//			}
+//			else if(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0) {
+//				if(this.comparator().compare(this.right(r),this.left(r))>0) {
+//					swapP(h,h.indexOf(r),h.indexOf(this.right(r)));
+//					swapE(listE,h.indexOf(r),h.indexOf(this.right(r)));
+//				}
+//				else if(this.comparator().compare(this.right(r),this.left(r))<0) {
+//					swapP(h,h.indexOf(r),h.indexOf(this.left(r)));
+//					swapE(listE,h.indexOf(r),h.indexOf(this.left(r)));
+//				}
+//			}
 //		}
 //		
-//		while(this.comparator().compare(r, left(r))<0|| this.comparator().compare(r,right(r))<-1) {
-//			if(this.conparator.compare(r, left(r))<0) {
-//				swapP(h,h.indexOf(r),h.indexOf(this.right(r)));
-//				swapE(listE,h.indexOf(r),h.indexOf(this.right(r)));
-//			}else if(this.comparator().compare(r, right(r))<0) {
-//				swapP(h,h.indexOf(r),h.indexOf(this.left(r)));
-//				swapE(listE,h.indexOf(r),h.indexOf(this.left(r)));
-//			}
+//		if(parent(r)!=null) {
 //			
+//			while(this.comparator().compare(r, parent(r)) > 0) {
+//				int storage = h.indexOf(r);
+//				int Parent_storage = h.indexOf(parent(r));
+//				while(listP.indexOf(r)!= h.indexOf(parent(r))) {
+//					swapP(h,h.indexOf(r),h.indexOf(parent(r)));
+//					swapE(listE,storage,Parent_storage);
+//				}
+//			}
 //		}
+//			
+//	}
+	
+	
+	private void moveUp(ArrayList<P> h, int i) {
+		P value = listP.get(i);
+		if(this.comparator().compare(value, parent(value))>0) {
+			int j = listP.indexOf(parent(value));
+			h.set(, parent(value));
+			moveUp(h, i);
+		}
 	}
 
 }
