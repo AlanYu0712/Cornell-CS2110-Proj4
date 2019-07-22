@@ -58,7 +58,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		listE.add(e);
 		listP.add(p);
 		if(listP.size()!=1 && listE.size()!=1)
-			this.fixheap(listP, listP.indexOf(p));
+			this.moveUp(listP, listP.indexOf(p));
 		
 		size++;
 		
@@ -95,11 +95,11 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		int headR = ((indexr/2)-1);
 		
 		if (indexr%2 == 0) {
-			if(listP.get(headR)!= null) 
+			if(headR>=0) 
 				return listP.get(headR);
 			
 		}else if(indexr%2 == 1) {
-			if(listP.get(headL)!= null) {
+			if(headL>=0) {
 				return listP.get(headL);
 			}
 		}
@@ -119,55 +119,64 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		h.set(j, temp);
 	}
 	
-	
-//	private void fixheap(ArrayList<P> h, int i) {
-//		System.out.println("the input is"+i);
-//		P r= h.get(i);
-//		P storageR = r;
-//		
-//		System.out.println(r);
-//		System.out.println("parent: "+parent(r));
-//		
-//		
-//		while(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0||this.comparator().compare(r, this.parent(r))>0) {
-//			if(this.comparator().compare(r, this.parent(r))>0) {
-//				swapP(h,h.indexOf(r),h.indexOf(this.parent(r)));
-//				swapE(listE,h.indexOf(r),h.indexOf(this.parent(r)));
-//			}
-//			else if(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0) {
-//				if(this.comparator().compare(this.right(r),this.left(r))>0) {
-//					swapP(h,h.indexOf(r),h.indexOf(this.right(r)));
-//					swapE(listE,h.indexOf(r),h.indexOf(this.right(r)));
-//				}
-//				else if(this.comparator().compare(this.right(r),this.left(r))<0) {
-//					swapP(h,h.indexOf(r),h.indexOf(this.left(r)));
-//					swapE(listE,h.indexOf(r),h.indexOf(this.left(r)));
-//				}
-//			}
-//		}
-//		
-//		if(parent(r)!=null) {
-//			
-//			while(this.comparator().compare(r, parent(r)) > 0) {
-//				int storage = h.indexOf(r);
-//				int Parent_storage = h.indexOf(parent(r));
-//				while(listP.indexOf(r)!= h.indexOf(parent(r))) {
-//					swapP(h,h.indexOf(r),h.indexOf(parent(r)));
-//					swapE(listE,storage,Parent_storage);
-//				}
-//			}
-//		}
-//			
-//	}
-	
+
 	
 	private void moveUp(ArrayList<P> h, int i) {
 		P value = listP.get(i);
-		if(this.comparator().compare(value, parent(value))>0) {
-			int j = listP.indexOf(parent(value));
-			h.set(value, parent(value));
-			moveUp(h, i);
+		if(listP.indexOf(parent(value))>=0) {
+			if(this.comparator().compare(value, parent(value))>0) {
+				int a = listP.indexOf(parent(value));
+				int z = listP.indexOf(value);
+				P conservV = listP.get(z);
+				P conservP = listP.get(a);
+				
+				swapP(h, listP.indexOf(value), listP.indexOf(parent(value)));
+				swapE(listE, z, a);
+				System.out.println("Final"+listP.indexOf(value));
+				moveUp(h, a);
+				
+			}
 		}
 	}
+	
+	private void fixheap(ArrayList<P> h, int i) {
+//	System.out.println("the input is"+i);
+//	P r= h.get(i);
+//	P storageR = r;
+//	
+//	System.out.println(r);
+//	System.out.println("parent: "+parent(r));
+//	
+//	
+//	while(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0||this.comparator().compare(r, this.parent(r))>0) {
+//		if(this.comparator().compare(r, this.parent(r))>0) {
+//			swapP(h,h.indexOf(r),h.indexOf(this.parent(r)));
+//			swapE(listE,h.indexOf(r),h.indexOf(this.parent(r)));
+//		}
+//		else if(this.comparator().compare(r, this.left(r))<0||this.comparator().compare(r, this.right(r))<0) {
+//			if(this.comparator().compare(this.right(r),this.left(r))>0) {
+//				swapP(h,h.indexOf(r),h.indexOf(this.right(r)));
+//				swapE(listE,h.indexOf(r),h.indexOf(this.right(r)));
+//			}
+//			else if(this.comparator().compare(this.right(r),this.left(r))<0) {
+//				swapP(h,h.indexOf(r),h.indexOf(this.left(r)));
+//				swapE(listE,h.indexOf(r),h.indexOf(this.left(r)));
+//			}
+//		}
+//	}
+//	
+//	if(parent(r)!=null) {
+//		
+//		while(this.comparator().compare(r, parent(r)) > 0) {
+//			int storage = h.indexOf(r);
+//			int Parent_storage = h.indexOf(parent(r));
+//			while(listP.indexOf(r)!= h.indexOf(parent(r))) {
+//				swapP(h,h.indexOf(r),h.indexOf(parent(r)));
+//				swapE(listE,storage,Parent_storage);
+//			}
+//		}
+//	}
+//		
+}
 
 }

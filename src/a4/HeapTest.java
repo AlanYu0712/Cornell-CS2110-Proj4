@@ -43,7 +43,7 @@ class HeapTest {
 		
 		assertEquals(4, h.size());
 		
-//		assertEquals("d", h.peek());
+		assertEquals("d", h.peek());
 		
 //		assertEquals("a", h.poll());
 //		
