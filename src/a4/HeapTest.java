@@ -31,12 +31,12 @@ class HeapTest {
 		Heap<String, Integer> h = new Heap<String, Integer>(c);
 		
 		System.out.println(h.size());
-		h.add("a", 3);
+		h.add("a", 2);
 		System.out.println(h.size());
-		h.add("b", 2);
+		h.add("b", 1);
 		
 		System.out.println("current size"+h.size());
-		h.add("c", 4);
+		h.add("c", 3);
 		System.out.println(h.size());
 		
 		h.add("d", 5);
@@ -45,16 +45,19 @@ class HeapTest {
 		
 		assertEquals("d", h.peek());
 		
+		h.add("e", 4);
+		assertEquals("d", h.peek());
+		
 		assertEquals("d", h.poll());
 		
-		assertEquals(3, h.size());
+		assertEquals(4, h.size());
 		
 		
+		assertEquals("e", h.peek());
+		
+		
+		h.changePriority("c", 5);
 		assertEquals("c", h.peek());
-//		
-//		
-//		h.changePriority("c", 5);
-//		assertEquals("c", h.peek());
 		
 		
 		

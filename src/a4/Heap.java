@@ -69,6 +69,11 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		// TODO Auto-generated method stub
 		int i=listE.indexOf(e);
 		listP.set(i, p);
+		
+		moveDown(listP, listP.indexOf(p));
+		moveUp(listP, listP.indexOf(p));
+
+		
 	}
 
 	private P left(P r) {
