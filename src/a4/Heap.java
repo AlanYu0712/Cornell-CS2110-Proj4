@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.NoSuchElementException;
 
+
+
 /**
  * 
  * @author Alan
@@ -21,22 +23,27 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	 * the size of the heap
 	 * a comparator 
 	 */
-	private ArrayList<E> listE= new ArrayList<E>();
-	private ArrayList<P> listP=new ArrayList<P>();
+	private ArrayList<E> listE = new ArrayList<E>();
+	private ArrayList<P> listP = new ArrayList<P>();
 	private int size;
 	private Comparator<P> conparator ;
+	
+	
 	
 	/*
 	 * Heap constructor
 	 */
 	public Heap(Comparator<P> c) {
-			 conparator= c;
-			 
+		
+		conparator = c;		 
 	}
+	
+	
+	
 	@Override
 	public Comparator<? super P> comparator() 
 	{
-		// TODO Auto-generated method stub
+
 		return conparator;
 	}
 	
@@ -51,6 +58,8 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		return size;
 	}
 	
+	
+	
 	/**
 	 * return the element with the highest priority 
 	 * and then remove it by replacing with the smallest priority element
@@ -61,7 +70,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	public E poll() throws NoSuchElementException {
 
 		//getting the highest priority element
-		E temp= listE.get(0);
+		E temp = listE.get(0);
 		
 		//replacing the highest element with the lowest
 		swapE(listE,0,size()-1);
@@ -116,6 +125,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	}
 	
 	
+	
 	/**
 	 * change the priority value of an element
 	 * @param e the element that needs to change its priority
@@ -125,7 +135,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	public void changePriority(E e, P p) throws NoSuchElementException {
 
 		//change the priority value in the priority array list
-		int i=listE.indexOf(e);
+		int i = listE.indexOf(e);
 		listP.set(i, p);
 		
 		//sort the collection until it satisfies the invariants of a heap
@@ -143,15 +153,17 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	private P left(P r) {
 		
 		//getting the index of the input node
-		int indexr= listP.indexOf(r);
+		int indexr = listP.indexOf(r);
 		// the index to find the left child
 		int leftIndex = (indexr*2)+1;
 		
 		//return left child if exits
 		if(leftIndex <= (listP.size()-1))
 			return listP.get((indexr*2)+1);
+		
 		return null;//return null if no left child available
 	}
+	
 	
 	
 	/**
@@ -162,13 +174,14 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	private P right(P r) {
 		
 		//getting the index of the input node
-		int indexr= listP.indexOf(r);
+		int indexr = listP.indexOf(r);
 		// the index to find the left child
 		int rightIndex = (indexr*2)+2;
 		
 		//return right child if exists
 		if(rightIndex <= (listP.size()-1))
 			return listP.get((indexr*2)+2);
+		
 		return null;//return null if right child not available
 	}
 	
@@ -182,7 +195,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	private P parent(P r) {
 		
 		//getting the index of the input node
-		int indexr= listP.indexOf(r);
+		int indexr = listP.indexOf(r);
 		System.out.println("the index is" + indexr);
 		
 		//getting the index of the parent if input node is on its parent's left side
@@ -207,6 +220,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	}
 	
 	
+	
 	/**
 	 * switching two nodes in its element array list
 	 * @param h the array list to operate (element type)
@@ -215,7 +229,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	 */
 	private void swapE(ArrayList<E> h, int i,int j) {
 		
-		E temp=  h.get(i);//median
+		E temp =  h.get(i);//median
 		h.set(i, h.get(j));
 		h.set(j, temp);
 	}
@@ -229,7 +243,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 	 */
 	private void swapP(ArrayList<P> h, int i,int j) {
 		
-		P temp=  h.get(i);//median
+		P temp =  h.get(i);//median
 		h.set(i, h.get(j));
 		h.set(j, temp);
 	}
@@ -259,11 +273,12 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 				swapP(h, listP.indexOf(value), listP.indexOf(parent(value)));
 				swapE(listE, z, a);
 				System.out.println("Final"+listP.indexOf(value));
-				moveUp(h, a);// keep on going until satisfy heap invariant
-				
+				moveUp(h, a);// keep on going until satisfy heap invariant				
 			}
 		}
 	}
+	
+	
 	
 	/**
 	 * a recursive sorting method that sort small priorities from up to bottom until it satisfies the heap invariant
@@ -276,7 +291,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 		P value = listP.get(i);
 		
 		//swap with child if child exists
-		if(listP.indexOf(left(value))<= (listP.size()-1)&&left(value)!=null) {
+		if(listP.indexOf(left(value))<=(listP.size()-1)&&left(value)!=null) {
 			
 			if(this.comparator().compare(value, left(value))<0) {
 				
@@ -289,8 +304,7 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 				swapP(h, listP.indexOf(value), listP.indexOf(left(value)));
 				swapE(listE, z, a);
 				System.out.println("Final"+listP.indexOf(value));
-				moveDown(h, a);// keep on going until satisfy heap invariant
-				
+				moveDown(h, a);// keep on going until satisfy heap invariant				
 			}
 		} else if(listP.indexOf(right(value))<= (listP.size()-1)&& right(value)!=null) {
 			
@@ -305,12 +319,9 @@ public class Heap<E,P> implements PriorityQueue<E, P> {
 				swapP(h, listP.indexOf(value), listP.indexOf(right(value)));
 				swapE(listE, z, a);
 				System.out.println("Final"+listP.indexOf(value));
-				moveDown(h, a);// keep on going until satisfy heap invariant
-				
+				moveDown(h, a);// keep on going until satisfy heap invariant				
 			}
 		}
 	}
-	
-
 
 }
